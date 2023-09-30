@@ -6,8 +6,13 @@ import java.util.Scanner; // Import Scanner class for user input.
 
 public class GuessTheWordWithArrayList {
     public static void main(String[] args) {
-        // Initialize a list of words for the game.
-        List<String> words = Arrays.asList("apple", "banana", "cherry", "orange", "grape");
+        // Initialize a list of words for the game, including words from various categories.
+        List<String> words = Arrays.asList(
+            "apple", "banana", "cherry", "orange", "grape",  // Fruits
+            "dog", "cat", "elephant", "lion", "tiger",      // Animals
+            "car", "bicycle", "bus", "train", "motorcycle", // Vehicles
+            "computer", "keyboard", "mouse", "monitor", "printer" // Electronics
+        );
 
         // Create a Random object to generate random numbers.
         Random random = new Random();
