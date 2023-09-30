@@ -1,0 +1,82 @@
+import java.util.ArrayList; // Import ArrayList class to manage a list of guessed letters.
+import java.util.Arrays; // Import Arrays class for initializing the list of words.
+import java.util.List; // Import List interface to work with lists.
+import java.util.Random; // Import Random class for generating random numbers.
+import java.util.Scanner; // Import Scanner class for user input.
+
+public class GuessTheWordWithArrayList {
+    public static void main(String[] args) {
+        // Initialize a list of words for the game.
+        List<String> words = Arrays.asList("apple", "banana", "cherry", "orange", "grape");
+
+        // Create a Random object to generate random numbers.
+        Random random = new Random();
+
+        // Select a random word from the list of words.
+        String wordToGuess = words.get(random.nextInt(words.size()));
+
+        // Set the maximum number of attempts allowed in the game.
+        int maxAttempts = 6;
+
+        // Create an ArrayList to store guessed letters.
+        List<Character> guessedLetters = new ArrayList<>();
+
+        // Initialize the guessed word with underscores.
+        String guessedWord = "_".repeat(wordToGuess.length());
+
+        // Create a Scanner object to read user input.
+        Scanner scanner = new Scanner(System.in);
+
+        // Display a welcome message and provide the number of attempts.
+        System.out.println("Welcome to Guess the Word!");
+        System.out.println("You have " + maxAttempts + " attempts to guess the word.");
+
+        // Main game loop
+        while (maxAttempts > 0 && !guessedWord.equals(wordToGuess)) {
+            // Display the current state of the guessed word.
+            System.out.println("Word: " + guessedWord);
+
+            // Prompt the user to enter a letter.
+            System.out.print("Enter a letter: ");
+            char guess = scanner.next().charAt(0);
+
+            // Check if the guessed letter has already been guessed.
+            if (guessedLetters.contains(guess)) {
+                System.out.println("You already guessed that letter.");
+                continue; // Skip the rest of the loop and continue to the next iteration.
+            }
+
+            // Add the guessed letter to the list of guessed letters.
+            guessedLetters.add(guess);
+
+            // Check if the guessed letter is in the word and update the guessed word.
+            if (wordToGuess.contains(String.valueOf(guess))) {
+                guessedWord = updateGuessedWord(wordToGuess, guessedWord, guess);
+            } else {
+                System.out.println("Sorry, that letter is not in the word.");
+                maxAttempts--; // Decrement the remaining attempts.
+            }
+        }
+
+        // Display the game result.
+        if (guessedWord.equals(wordToGuess)) {
+            System.out.println("Congratulations! You guessed the word: " + wordToGuess);
+        } else {
+            System.out.println("You ran out of attempts. The word was: " + wordToGuess);
+        }
+
+        // Close the Scanner.
+        scanner.close();
+    }
+
+    // Update the guessed word with correctly guessed letters.
+    static String updateGuessedWord(String wordToGuess, String guessedWord, char guess) {
+        StringBuilder updatedWord = new StringBuilder(guessedWord);
+        for (int i = 0; i < wordToGuess.length(); i++) {
+            if (wordToGuess.charAt(i) == guess) {
+                updatedWord.setCharAt(i, guess);
+            }
+        }
+        return updatedWord.toString();
+    }
+}
